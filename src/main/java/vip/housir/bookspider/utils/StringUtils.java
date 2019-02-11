@@ -19,6 +19,19 @@ public class StringUtils {
         for (int i = 0; i < CN_ARR.length; i++) {
             chinese = chinese.replace(CN_ARR[i], String.valueOf(i));
         }
+
+        if ("十".equals(chinese)) {
+            return 10;
+        }
+
+        if ("1百".equals(chinese)) {
+            return 100;
+        }
+
+        if (chinese.length() == 2) {
+            chinese = chinese.replace("十", "1");
+        }
+
         chinese = chinese.replace("十", "");
 
         return Integer.parseInt(chinese);

@@ -26,7 +26,7 @@ public class SpiderConfig {
 
         return Spider.create(new ChapterSpider(site()))
                 .addPipeline(new ChapterPipeline(chapterService, mqSender))
-                .thread(4);
+                .thread(2);
     }
 
     @Bean
@@ -34,7 +34,7 @@ public class SpiderConfig {
 
         return Spider.create(new BookSpider(site()))
                 .addPipeline(new BookPipeline(bookService, mqSender))
-                .thread(4);
+                .thread(2);
     }
 
     private Site site() {
