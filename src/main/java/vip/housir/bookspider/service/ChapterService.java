@@ -1,11 +1,17 @@
 package vip.housir.bookspider.service;
 
-import java.util.Map;
+import vip.housir.bookspider.entity.Chapter;
 
 /**
  * @author housirvip
  */
 public interface ChapterService {
 
-    int createByMap(Map<String, Object> map);
+    /**
+     * 插入章节，返回主键
+     *
+     * @param chapter Chapter
+     * @return Integer
+     */
+    Integer create(Chapter chapter);
 }

@@ -10,10 +10,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    static final String LINK = "LINK";
+    static final String BOOK = "book";
+    static final String CHAPTER = "chapter";
 
     @Bean
-    public Queue link() {
-        return new Queue(LINK);
+    public Queue book() {
+
+        return new Queue(BOOK);
+    }
+
+    @Bean
+    public Queue chapter() {
+
+        return new Queue(CHAPTER);
     }
 }

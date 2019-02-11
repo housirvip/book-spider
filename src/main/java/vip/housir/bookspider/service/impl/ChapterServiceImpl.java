@@ -6,8 +6,6 @@ import vip.housir.bookspider.entity.Chapter;
 import vip.housir.bookspider.mapper.ChapterMapper;
 import vip.housir.bookspider.service.ChapterService;
 
-import java.util.Map;
-
 /**
  * @author housirvip
  */
@@ -18,12 +16,10 @@ public class ChapterServiceImpl implements ChapterService {
     private final ChapterMapper chapterMapper;
 
     @Override
-    public int createByMap(Map<String, Object> map) {
+    public Integer create(Chapter chapter) {
 
-        Chapter chapter = new Chapter();
-        chapter.setTitle((String) map.get("title"));
-        chapter.setContent((String) map.get("content"));
+        chapterMapper.insertSelective(chapter);
 
-        return chapterMapper.insert(chapter);
+        return chapter.getId();
     }
 }

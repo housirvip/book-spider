@@ -18,5 +18,7 @@ public class Book implements Serializable {
 
     private String cover;
 
+    private String url;
+
     private static final long serialVersionUID = 1L;
 }
