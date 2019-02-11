@@ -7,5 +7,11 @@ import vip.housir.bookspider.entity.Book;
  */
 public interface BookService {
 
+    /**
+     * 新建书籍，返回主键
+     *
+     * @param book Book
+     * @return Integer
+     */
     Integer create(Book book);
 }
