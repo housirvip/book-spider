@@ -14,6 +14,8 @@ public class Domain implements Serializable {
 
     private String domain;
 
+    private String name;
+
     private Integer bookId;
 
     private Integer chapterId;

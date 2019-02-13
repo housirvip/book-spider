@@ -10,6 +10,7 @@ import java.util.List;
  */
 @Data
 public class Rule implements Serializable {
+
     private Integer id;
 
     private Integer domainId;
