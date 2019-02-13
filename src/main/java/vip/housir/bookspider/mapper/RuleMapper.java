@@ -3,6 +3,8 @@ package vip.housir.bookspider.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import vip.housir.bookspider.entity.Rule;
 
+import java.util.List;
+
 /**
  * @author housirvip
  */
@@ -66,4 +68,12 @@ public interface RuleMapper {
      * @return int
      */
     int updateByPrimaryKey(Rule record);
+
+    /**
+     * 根据 domainId 查询所有结果
+     *
+     * @param domainId Integer
+     * @return List
+     */
+    List<Rule> selectAllByDomainId(Integer domainId);
 }

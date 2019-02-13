@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="vip.housir.bookspider.entity.Domain">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="book_id" jdbcType="INTEGER" property="bookId" />
-    <result column="chapter_id" jdbcType="INTEGER" property="chapterId" />
+    <result column="thread" jdbcType="INTEGER" property="thread" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, domain, name, book_id, chapter_id
+    id, domain, url, name, thread
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,10 +25,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into domain (domain, name, book_id, 
-      chapter_id)
-    values (#{domain,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{bookId,jdbcType=INTEGER}, 
-      #{chapterId,jdbcType=INTEGER})
+    insert into domain (domain, url, name, 
+      thread)
+    values (#{domain,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{thread,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="vip.housir.bookspider.entity.Domain">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -39,28 +39,28 @@
       <if test="domain != null">
         domain,
       </if>
+      <if test="url != null">
+        url,
+      </if>
       <if test="name != null">
         name,
       </if>
-      <if test="bookId != null">
-        book_id,
-      </if>
-      <if test="chapterId != null">
-        chapter_id,
+      <if test="thread != null">
+        thread,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="domain != null">
         #{domain,jdbcType=VARCHAR},
       </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="bookId != null">
-        #{bookId,jdbcType=INTEGER},
-      </if>
-      <if test="chapterId != null">
-        #{chapterId,jdbcType=INTEGER},
+      <if test="thread != null">
+        #{thread,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -70,14 +70,14 @@
       <if test="domain != null">
         domain = #{domain,jdbcType=VARCHAR},
       </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="bookId != null">
-        book_id = #{bookId,jdbcType=INTEGER},
-      </if>
-      <if test="chapterId != null">
-        chapter_id = #{chapterId,jdbcType=INTEGER},
+      <if test="thread != null">
+        thread = #{thread,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -85,9 +85,9 @@
   <update id="updateByPrimaryKey" parameterType="vip.housir.bookspider.entity.Domain">
     update domain
     set domain = #{domain,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      book_id = #{bookId,jdbcType=INTEGER},
-      chapter_id = #{chapterId,jdbcType=INTEGER}
+      thread = #{thread,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -19,14 +19,14 @@ public class SpiderConfig {
     @Bean
     public Spider chapterSpider() {
 
-        return Spider.create(new ChapterSpider(site()))
+        return Spider.create(new ChapterSpider(site(), spiderCache()))
                 .addPipeline(new ChapterPipeline(mqSender));
     }
 
     @Bean
     public Spider bookSpider() {
 
-        return Spider.create(new BookSpider(site()))
+        return Spider.create(new BookSpider(site(), spiderCache()))
                 .addPipeline(new BookPipeline(mqSender));
     }
 

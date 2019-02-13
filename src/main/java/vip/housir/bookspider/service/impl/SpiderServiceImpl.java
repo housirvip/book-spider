@@ -2,11 +2,9 @@ package vip.housir.bookspider.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Spider;
-import vip.housir.bookspider.entity.Book;
-import vip.housir.bookspider.entity.Chapter;
+import vip.housir.bookspider.entity.SpiderTask;
 import vip.housir.bookspider.service.SpiderService;
 
 /**
@@ -20,34 +18,31 @@ public class SpiderServiceImpl implements SpiderService {
     private final Spider chapterSpider;
     private final Spider bookSpider;
 
-    @Value(value = "https://www.biqiuge.com")
-    private String rootUrl;
-
     @Override
-    public void crawl(Chapter chapter) {
+    public void crawl(SpiderTask spiderTask) {
 
-        if (chapter.getUrl() != null) {
-            chapterSpider.addUrl(rootUrl + chapter.getUrl());
+        Spider spider = getSpider(spiderTask);
+
+        if (spiderTask.getUrl() != null) {
+            spider.addUrl(spiderTask.getDomainUrl() + spiderTask.getUrl());
         }
 
-        if (chapter.getUrls() != null) {
-            chapter.getUrls().forEach(url -> chapterSpider.addUrl(rootUrl + url));
+        if (spiderTask.getUrls() != null) {
+            spiderTask.getUrls().forEach(url -> spider.addUrl(spiderTask.getDomainUrl() + url));
         }
 
-        chapterSpider.thread(chapter.getThread()).start();
+        spider.thread(spiderTask.getThread()).start();
     }
 
-    @Override
-    public void crawl(Book book) {
+    private Spider getSpider(SpiderTask spiderTask) {
 
-        if (book.getUrl() != null) {
-            bookSpider.addUrl(rootUrl + book.getUrl());
+        switch (spiderTask.getType()) {
+            case Chapter:
+                return chapterSpider;
+            case Book:
+                return bookSpider;
+            default:
+                throw new RuntimeException("无效的 TaskType");
         }
-
-        if (book.getUrls() != null) {
-            book.getUrls().forEach(url -> bookSpider.addUrl(rootUrl + url));
-        }
-
-        bookSpider.thread(book.getThread()).start();
     }
 }

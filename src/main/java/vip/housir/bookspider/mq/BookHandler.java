@@ -30,7 +30,7 @@ public class BookHandler {
 
         bookService.create(book);
 
-        spiderCache.saveBookId(book.getSiteId(), book.getId());
+        spiderCache.setBookId(book.getId());
 
         log.info("下载书籍：[" + book.getName() + "] 完成，编号：" + book.getId());
     }

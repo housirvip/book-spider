@@ -13,6 +13,10 @@ public class SpiderTask implements Serializable {
 
     private Integer siteId;
 
+    private Integer domainId;
+
+    private String domainUrl;
+
     private String url;
 
     private List<String> urls;

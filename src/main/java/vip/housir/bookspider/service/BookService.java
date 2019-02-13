@@ -11,7 +11,6 @@ public interface BookService {
      * 新建书籍，返回主键
      *
      * @param book Book
-     * @return Integer
      */
-    Integer create(Book book);
+    void create(Book book);
 }

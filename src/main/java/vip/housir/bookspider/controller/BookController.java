@@ -20,11 +20,11 @@ public class BookController {
     private final MqSender mqSender;
 
     @PostMapping(value = "/add")
-    public SpiderTask add(@RequestParam String url) {
+    public SpiderTask add(@RequestParam Integer domainId, @RequestParam String book) {
 
         SpiderTask spiderTask = new SpiderTask();
-        spiderTask.setUrl(url);
-        spiderTask.setThread(2);
+        spiderTask.setUrl(book);
+        spiderTask.setDomainId(domainId);
         spiderTask.setType(TaskType.Book);
 
         mqSender.send(spiderTask);

@@ -6,6 +6,8 @@ import vip.housir.bookspider.entity.Book;
 import vip.housir.bookspider.utils.JsonUtils;
 import vip.housir.bookspider.utils.StringUtils;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Slf4j
 public class StringUtilsTest {
 
@@ -34,5 +36,16 @@ public class StringUtilsTest {
         book.setName("asd");
 
         log.info(JsonUtils.convertToString(book));
+    }
+
+    @Test
+    public void testClass() {
+
+        AtomicReference<String> value = new AtomicReference<>("asd");
+
+        String res = value.updateAndGet(v -> v.replace("a", "1"));
+
+        log.info(res);
+        log.info(value.get());
     }
 }

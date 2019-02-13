@@ -11,7 +11,6 @@ public interface ChapterService {
      * 插入章节，返回主键
      *
      * @param chapter Chapter
-     * @return Integer
      */
-    Integer create(Chapter chapter);
+    void create(Chapter chapter);
 }

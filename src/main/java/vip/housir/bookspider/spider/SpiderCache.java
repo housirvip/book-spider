@@ -1,27 +1,23 @@
 package vip.housir.bookspider.spider;
 
-import com.google.common.collect.Maps;
+import lombok.Data;
+import vip.housir.bookspider.entity.Rule;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author housirvip
  */
+@Data
 public class SpiderCache {
 
-    SpiderCache() {
-        bookIdContrast = Maps.newHashMap();
-    }
+    private Boolean busy;
 
-    private Map<Integer, Integer> bookIdContrast;
+    private Integer bookId;
 
-    public Integer getBookId(Integer siteId) {
+    private String siteId;
 
-        return bookIdContrast.get(siteId);
-    }
+    private Integer domainId;
 
-    public Integer saveBookId(Integer siteId, Integer bookId) {
-
-        return bookIdContrast.put(siteId, bookId);
-    }
+    private List<Rule> rules;
 }

@@ -41,10 +41,8 @@ public class StringUtils {
         return Integer.parseInt(chinese);
     }
 
-    public static Integer getSiteId(String url) {
+    public static String getSiteId(String url) {
 
-        String siteId = siteIdPattern.matcher(url).replaceAll("$1");
-
-        return Integer.valueOf(siteId);
+        return siteIdPattern.matcher(url).replaceAll("$1");
     }
 }

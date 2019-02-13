@@ -28,11 +28,9 @@ public class BookPipeline implements Pipeline {
         Book book = new Book();
         book.setName((String) map.get("name"));
         book.setCover((String) map.get("cover"));
-        book.setSiteId((Integer) map.get("siteId"));
         mqSender.send(book);
 
         SpiderTask spiderTask = new SpiderTask();
-        spiderTask.setThread(2);
         spiderTask.setType(TaskType.Chapter);
         spiderTask.setUrls((List<String>) map.get("urls"));
         mqSender.send(spiderTask);

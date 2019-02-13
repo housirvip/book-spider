@@ -28,7 +28,7 @@ public class ChapterPipeline implements Pipeline {
         chapter.setTitle((String) map.get("title"));
         chapter.setContent((String) map.get("content"));
         chapter.setNum((Integer) map.get("num"));
-        chapter.setSiteId((Integer) map.get("siteId"));
+        chapter.setBookId((Integer) map.get("bookId"));
 
         mqSender.send(chapter);
     }

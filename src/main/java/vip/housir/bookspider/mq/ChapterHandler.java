@@ -27,7 +27,7 @@ public class ChapterHandler {
     public void process(String payload) {
 
         Chapter chapter = JsonUtils.convertToObj(payload, Chapter.class);
-        chapter.setBookId(spiderCache.getBookId(chapter.getSiteId()));
+        chapter.setBookId(spiderCache.getBookId());
 
         chapterService.create(chapter);
 

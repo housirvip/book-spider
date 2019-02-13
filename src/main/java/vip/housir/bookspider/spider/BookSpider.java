@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.selector.Selectable;
-import vip.housir.bookspider.utils.StringUtils;
-
-import java.util.List;
+import vip.housir.bookspider.common.Constant;
+import vip.housir.bookspider.utils.SpiderUtils;
 
 /**
  * @author housirvip
@@ -16,6 +14,10 @@ import java.util.List;
 public class BookSpider implements PageProcessor {
 
     private final Site site;
+
+    private final SpiderCache spiderCache;
+
+    private static String ruleType = Constant.BOOK;
 
     @Override
     public Site getSite() {
@@ -26,19 +28,10 @@ public class BookSpider implements PageProcessor {
     @Override
     public void process(Page page) {
 
-        Selectable info = page.getHtml().xpath("//div[@class='info']");
-
-        final String cover = info.xpath("//img/@src").get();
-        final String name = info.xpath("//h2/text()").get();
-
-        Selectable list = page.getHtml().xpath("//div[@class='listmain']");
-
-        List<String> urls = list.xpath("//a/@href").all();
-
-        page.putField("cover", cover);
-        page.putField("name", name);
-        page.putField("urls", urls);
-
-        page.putField("siteId", StringUtils.getSiteId(page.getRequest().getUrl()));
+        spiderCache.getRules().forEach(rule -> {
+            if (ruleType.equals(rule.getType())) {
+                SpiderUtils.putField(page, rule);
+            }
+        });
     }
 }
