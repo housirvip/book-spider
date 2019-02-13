@@ -2,6 +2,8 @@ package vip.housirvip.bookspider;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import vip.housir.bookspider.entity.Book;
+import vip.housir.bookspider.utils.JsonUtils;
 import vip.housir.bookspider.utils.StringUtils;
 
 @Slf4j
@@ -23,5 +25,14 @@ public class StringUtilsTest {
         String res = "https://www.biqiuge.com/book/16513/".replaceAll("http.+/[a-z]+/([0-9]+)/?.*", "$1");
 
         log.info(res);
+    }
+
+    @Test
+    public void testJson() {
+
+        Book book = new Book();
+        book.setName("asd");
+
+        log.info(JsonUtils.convertToString(book));
     }
 }
