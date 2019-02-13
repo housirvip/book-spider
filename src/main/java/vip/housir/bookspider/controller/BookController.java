@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import vip.housir.bookspider.entity.Book;
+import vip.housir.bookspider.entity.SpiderTask;
+import vip.housir.bookspider.entity.TaskType;
 import vip.housir.bookspider.mq.MqSender;
 
 /**
@@ -19,13 +20,15 @@ public class BookController {
     private final MqSender mqSender;
 
     @PostMapping(value = "/add")
-    public Book add(@RequestParam String url) {
+    public SpiderTask add(@RequestParam String url) {
 
-        Book book = new Book();
-        book.setUrl(url);
+        SpiderTask spiderTask = new SpiderTask();
+        spiderTask.setUrl(url);
+        spiderTask.setThread(2);
+        spiderTask.setType(TaskType.Book);
 
-        mqSender.send(book);
+        mqSender.send(spiderTask);
 
-        return book;
+        return spiderTask;
     }
 }

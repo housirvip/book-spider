@@ -6,7 +6,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import vip.housir.bookspider.entity.Chapter;
-import vip.housir.bookspider.service.SpiderService;
+import vip.housir.bookspider.service.ChapterService;
+import vip.housir.bookspider.spider.SpiderCache;
 import vip.housir.bookspider.utils.JsonUtils;
 
 /**
@@ -18,11 +19,18 @@ import vip.housir.bookspider.utils.JsonUtils;
 @RabbitListener(queues = RabbitConfig.CHAPTER)
 public class ChapterHandler {
 
-    private final SpiderService spiderService;
+    private final ChapterService chapterService;
+
+    private final SpiderCache spiderCache;
 
     @RabbitHandler
     public void process(String payload) {
 
-        spiderService.crawl(JsonUtils.convertToObj(payload, Chapter.class));
+        Chapter chapter = JsonUtils.convertToObj(payload, Chapter.class);
+        chapter.setBookId(spiderCache.getBookId(chapter.getSiteId()));
+
+        chapterService.create(chapter);
+
+        log.info("下载章节：[第" + chapter.getNum() + "章 " + chapter.getTitle() + "] 完成，编号：" + chapter.getId());
     }
 }

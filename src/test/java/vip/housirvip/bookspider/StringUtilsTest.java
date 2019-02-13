@@ -15,7 +15,13 @@ public class StringUtilsTest {
         assert StringUtils.chinese2Int("八八六") == 886;
         assert StringUtils.chinese2Int("三八") == 38;
         assert StringUtils.chinese2Int("一三四六") == 1346;
+    }
 
-        assert "十9".length() == 2;
+    @Test
+    public void testRegexp() {
+
+        String res = "https://www.biqiuge.com/book/16513/".replaceAll("http.+/[a-z]+/([0-9]+)/?.*", "$1");
+
+        log.info(res);
     }
 }

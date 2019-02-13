@@ -2,6 +2,8 @@ package vip.housir.bookspider.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.regex.Pattern;
+
 /**
  * @author housirvip
  */
@@ -9,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 public class StringUtils {
 
     private static final String[] CN_ARR = new String[]{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
+
+    private static Pattern siteIdPattern = Pattern.compile("http.+/[a-z]+/([0-9]+)/?.*");
 
     public static Integer chinese2Int(String chinese) {
 
@@ -35,5 +39,12 @@ public class StringUtils {
         chinese = chinese.replace("十", "");
 
         return Integer.parseInt(chinese);
+    }
+
+    public static Integer getSiteId(String url) {
+
+        String siteId = siteIdPattern.matcher(url).replaceAll("$1");
+
+        return Integer.valueOf(siteId);
     }
 }

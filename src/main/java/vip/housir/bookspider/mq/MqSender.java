@@ -5,6 +5,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
 import vip.housir.bookspider.entity.Book;
 import vip.housir.bookspider.entity.Chapter;
+import vip.housir.bookspider.entity.SpiderTask;
 import vip.housir.bookspider.utils.JsonUtils;
 
 /**
@@ -24,5 +25,10 @@ public class MqSender {
     public void send(Chapter chapter) {
 
         this.rabbitTemplate.convertAndSend(RabbitConfig.CHAPTER, JsonUtils.convertToString(chapter));
+    }
+
+    public void send(SpiderTask spiderTask) {
+
+        this.rabbitTemplate.convertAndSend(RabbitConfig.TASK, JsonUtils.convertToString(spiderTask));
     }
 }

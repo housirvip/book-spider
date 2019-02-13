@@ -7,7 +7,6 @@ import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 import vip.housir.bookspider.entity.Chapter;
 import vip.housir.bookspider.mq.MqSender;
-import vip.housir.bookspider.service.ChapterService;
 
 import java.util.Map;
 
@@ -17,8 +16,6 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class ChapterPipeline implements Pipeline {
-
-    private final ChapterService chapterService;
 
     private final MqSender mqSender;
 
@@ -31,9 +28,8 @@ public class ChapterPipeline implements Pipeline {
         chapter.setTitle((String) map.get("title"));
         chapter.setContent((String) map.get("content"));
         chapter.setNum((Integer) map.get("num"));
+        chapter.setSiteId((Integer) map.get("siteId"));
 
-        chapterService.create(chapter);
-
-        log.info("下载" + chapter.getNum() + "章：" + chapter.getTitle());
+        mqSender.send(chapter);
     }
 }

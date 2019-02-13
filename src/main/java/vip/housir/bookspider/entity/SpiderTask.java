@@ -9,21 +9,15 @@ import java.util.List;
  * @author housirvip
  */
 @Data
-public class Book implements Serializable {
-
-    private Integer id;
+public class SpiderTask implements Serializable {
 
     private Integer siteId;
-
-    private String name;
-
-    private String author;
-
-    private String cover;
 
     private String url;
 
     private List<String> urls;
+
+    private TaskType type;
 
     private Integer thread;
 

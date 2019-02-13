@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import vip.housir.bookspider.mq.MqSender;
-import vip.housir.bookspider.service.BookService;
-import vip.housir.bookspider.service.ChapterService;
 
 /**
  * @author housirvip
@@ -16,33 +14,34 @@ import vip.housir.bookspider.service.ChapterService;
 @RequiredArgsConstructor
 public class SpiderConfig {
 
-    private final BookService bookService;
-    private final ChapterService chapterService;
-
     private final MqSender mqSender;
 
     @Bean
     public Spider chapterSpider() {
 
         return Spider.create(new ChapterSpider(site()))
-                .addPipeline(new ChapterPipeline(chapterService, mqSender))
-                .thread(2);
+                .addPipeline(new ChapterPipeline(mqSender));
     }
 
     @Bean
     public Spider bookSpider() {
 
         return Spider.create(new BookSpider(site()))
-                .addPipeline(new BookPipeline(bookService, mqSender))
-                .thread(2);
+                .addPipeline(new BookPipeline(mqSender));
     }
 
-    private Site site() {
+    @Bean
+    public Site site() {
 
         return Site.me()
                 .setRetryTimes(3)
                 .setSleepTime(1000)
                 .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36")
                 .setCharset("gbk");
+    }
+
+    @Bean
+    public SpiderCache spiderCache() {
+        return new SpiderCache();
     }
 }

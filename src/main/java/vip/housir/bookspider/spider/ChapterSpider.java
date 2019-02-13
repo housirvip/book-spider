@@ -53,5 +53,7 @@ public class ChapterSpider implements PageProcessor {
         page.putField("title", title);
         page.putField("content", content);
         page.putField("num", num);
+
+        page.putField("siteId", StringUtils.getSiteId(page.getRequest().getUrl()));
     }
 }

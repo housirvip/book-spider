@@ -17,6 +17,8 @@ public class Chapter implements Serializable {
 
     private Integer bookId;
 
+    private Integer siteId;
+
     private Integer num;
 
     private String content;
@@ -24,6 +26,8 @@ public class Chapter implements Serializable {
     private String url;
 
     private List<String> urls;
+
+    private Integer thread;
 
     private static final long serialVersionUID = 1L;
 }

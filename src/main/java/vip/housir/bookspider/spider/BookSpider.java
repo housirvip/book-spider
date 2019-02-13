@@ -5,6 +5,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
+import vip.housir.bookspider.utils.StringUtils;
 
 import java.util.List;
 
@@ -37,5 +38,7 @@ public class BookSpider implements PageProcessor {
         page.putField("cover", cover);
         page.putField("name", name);
         page.putField("urls", urls);
+
+        page.putField("siteId", StringUtils.getSiteId(page.getRequest().getUrl()));
     }
 }

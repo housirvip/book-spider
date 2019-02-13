@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Spider;
 import vip.housir.bookspider.entity.Book;
 import vip.housir.bookspider.entity.Chapter;
-import vip.housir.bookspider.mq.MqSender;
-import vip.housir.bookspider.service.BookService;
-import vip.housir.bookspider.service.ChapterService;
 import vip.housir.bookspider.service.SpiderService;
 
 /**
@@ -22,11 +19,6 @@ public class SpiderServiceImpl implements SpiderService {
 
     private final Spider chapterSpider;
     private final Spider bookSpider;
-
-    private final BookService bookService;
-    private final ChapterService chapterService;
-
-    private final MqSender mqSender;
 
     @Value(value = "https://www.biqiuge.com")
     private String rootUrl;
@@ -42,7 +34,7 @@ public class SpiderServiceImpl implements SpiderService {
             chapter.getUrls().forEach(url -> chapterSpider.addUrl(rootUrl + url));
         }
 
-        chapterSpider.start();
+        chapterSpider.thread(chapter.getThread()).start();
     }
 
     @Override
@@ -52,6 +44,10 @@ public class SpiderServiceImpl implements SpiderService {
             bookSpider.addUrl(rootUrl + book.getUrl());
         }
 
-        bookSpider.start();
+        if (book.getUrls() != null) {
+            book.getUrls().forEach(url -> bookSpider.addUrl(rootUrl + url));
+        }
+
+        bookSpider.thread(book.getThread()).start();
     }
 }
