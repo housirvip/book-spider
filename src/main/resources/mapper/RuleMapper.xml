@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.housir.bookspider.mapper.RuleMapper">
+    <resultMap id="BaseResultMap" type="vip.housir.bookspider.entity.Rule">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="domain_id" jdbcType="INTEGER" property="domainId"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="key" jdbcType="VARCHAR" property="key"/>
+        <result column="xpath" jdbcType="VARCHAR" property="xpath"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="vip.housir.bookspider.entity.Rule">
+        <result column="regexp" jdbcType="LONGVARCHAR" property="regexp"
+                typeHandler="vip.housir.bookspider.common.ListTypeHandler"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, domain_id, type, key, xpath
+  </sql>
+    <sql id="Blob_Column_List">
+    regexp
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from rule
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="vip.housir.bookspider.entity.Rule">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into rule (domain_id, type, key,
+        xpath, regexp
+        )
+        values (#{domainId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{key,jdbcType=VARCHAR},
+        #{xpath,jdbcType=VARCHAR},
+        #{regexp,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="vip.housir.bookspider.entity.Rule">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="domainId != null">
+                domain_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="key != null">
+                key,
+            </if>
+            <if test="xpath != null">
+                xpath,
+            </if>
+            <if test="regexp != null">
+                regexp,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="domainId != null">
+                #{domainId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="key != null">
+                #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="xpath != null">
+                #{xpath,jdbcType=VARCHAR},
+            </if>
+            <if test="regexp != null">
+                #{regexp,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="vip.housir.bookspider.entity.Rule">
+        update rule
+        <set>
+            <if test="domainId != null">
+                domain_id = #{domainId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="key != null">
+                key = #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="xpath != null">
+                xpath = #{xpath,jdbcType=VARCHAR},
+            </if>
+            <if test="regexp != null">
+                regexp = #{regexp,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="vip.housir.bookspider.entity.Rule">
+    update rule
+    set domain_id = #{domainId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      key = #{key,jdbcType=VARCHAR},
+      xpath = #{xpath,jdbcType=VARCHAR},
+      regexp = #{regexp,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="vip.housir.bookspider.entity.Rule">
+    update rule
+    set domain_id = #{domainId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      key = #{key,jdbcType=VARCHAR},
+      xpath = #{xpath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
