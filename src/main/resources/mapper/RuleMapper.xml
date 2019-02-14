@@ -25,7 +25,7 @@
         from rule
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectAllByDomainId" resultType="vip.housir.bookspider.entity.Rule">
+    <select id="selectAllByDomainId" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
         ,

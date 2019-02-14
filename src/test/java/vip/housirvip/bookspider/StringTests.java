@@ -9,16 +9,47 @@ import vip.housir.bookspider.utils.StringUtils;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
-public class StringUtilsTest {
+public class StringTests {
 
     @Test
-    public void test() {
+    public void test0() {
 
         assert "第八八六章".replaceAll("[第章]", "").equals("八八六");
 
         assert StringUtils.chinese2Int("八八六") == 886;
         assert StringUtils.chinese2Int("三八") == 38;
         assert StringUtils.chinese2Int("一三四六") == 1346;
+    }
+
+    @Test
+    public void test1() {
+
+        int count1 = 0;
+        int count2 = 0;
+        for (int i = 0; i < 10; i++) {
+            count1 = count1++;
+            count2++;
+        }
+        assert count1 == 0;
+        assert count2 == 10;
+    }
+
+    @Test
+    public void test3() {
+
+        int i = 50;
+        Integer a = 50;
+        Integer b = Integer.valueOf(50);
+        Integer c = Integer.parseInt("50");
+        Integer d = new Integer(50);
+
+        assert i == a;
+        assert i == b;
+        assert i == c;
+        assert i == d;
+        assert a == b;
+        assert a == c;
+        assert a != d;
     }
 
     @Test
