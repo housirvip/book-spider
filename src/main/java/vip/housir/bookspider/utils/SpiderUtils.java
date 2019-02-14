@@ -1,9 +1,12 @@
 package vip.housir.bookspider.utils;
 
 import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.selector.Selectable;
 import vip.housir.bookspider.common.Constant;
+import vip.housir.bookspider.entity.KeyValue;
 import vip.housir.bookspider.entity.Rule;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -13,18 +16,26 @@ public class SpiderUtils {
 
     public static void putField(Page page, Rule rule) {
 
-        switch (rule.getKey()) {
+        Selectable selectable = page.getHtml().xpath(rule.getXpath());
+        switch (rule.getName()) {
             case Constant.URLS:
-                page.putField(Constant.URLS, page.getHtml().xpath(rule.getXpath()).all());
+                page.putField(Constant.URLS, selectable.all());
                 break;
             case Constant.NUM:
+                page.putField(Constant.NUM, StringUtils.chinese2Int(handleString(selectable.get(), rule)));
                 break;
             default:
-                AtomicReference<String> value = new AtomicReference<>(page.getHtml().xpath(rule.getXpath()).get());
-                if (rule.getRegexp() != null) {
-                    rule.getRegexp().forEach(regexp -> value.updateAndGet(v -> v.replaceAll(regexp, "")));
-                }
-                page.putField(rule.getKey(), value.get());
+                page.putField(rule.getName(), handleString(selectable.get(), rule));
         }
+    }
+
+    private static String handleString(String input, Rule rule) {
+
+        AtomicReference<String> value = new AtomicReference<>(input);
+        if (rule.getPattern() != null) {
+            List<KeyValue> list = JsonUtils.convertToList(rule.getPattern(), KeyValue.class);
+            list.forEach(regexp -> value.updateAndGet(v -> v.replaceAll(regexp.getKey(), regexp.getValue())));
+        }
+        return value.get().trim();
     }
 }

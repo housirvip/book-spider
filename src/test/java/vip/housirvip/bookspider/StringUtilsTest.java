@@ -48,4 +48,16 @@ public class StringUtilsTest {
         log.info(res);
         log.info(value.get());
     }
+
+    @Test
+    public void testChineseInt() {
+
+        log.info(String.valueOf(StringUtils.chinese2Int("1055")));
+        log.info(String.valueOf(StringUtils.chinese2Int("三零四六")));
+        log.info(String.valueOf(StringUtils.chinese2Int("奥术大师多一百")));
+        log.info(String.valueOf(StringUtils.chinese2Int("奥术一千大师")));
+        log.info(String.valueOf(StringUtils.chinese2Int("一千五百")));
+        log.info(String.valueOf(StringUtils.chinese2Int("一千五百六十")));
+        log.info(String.valueOf(StringUtils.chinese2Int("一千五百六十三")));
+    }
 }

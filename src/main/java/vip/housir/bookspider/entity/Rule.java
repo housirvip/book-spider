@@ -17,11 +17,13 @@ public class Rule implements Serializable {
 
     private String type;
 
-    private String key;
+    private String name;
 
     private String xpath;
 
-    private List<String> regexp;
+    private String pattern;
+
+    private List<KeyValue> patterns;
 
     private static final long serialVersionUID = 1L;
 }
