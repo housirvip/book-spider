@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author housirvip
@@ -21,9 +22,7 @@ public class Rule implements Serializable {
 
     private String xpath;
 
-    private String pattern;
-
-    private List<KeyValue> patterns;
+    private List<Map> pattern;
 
     private static final long serialVersionUID = 1L;
 }

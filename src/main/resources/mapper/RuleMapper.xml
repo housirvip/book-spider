@@ -9,7 +9,8 @@
         <result column="xpath" jdbcType="VARCHAR" property="xpath"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="vip.housir.bookspider.entity.Rule">
-        <result column="pattern" jdbcType="LONGVARCHAR" property="pattern"/>
+        <result column="pattern" jdbcType="LONGVARCHAR" property="pattern"
+                typeHandler="vip.housir.bookspider.common.ListTypeHandler"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, domain_id, type, name, xpath
@@ -42,9 +43,12 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into rule (domain_id, type, name,
-        xpath, pattern)
+        xpath, pattern
+        )
         values (#{domainId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-        #{xpath,jdbcType=VARCHAR}, #{pattern,jdbcType=LONGVARCHAR})
+        #{xpath,jdbcType=VARCHAR},
+        #{pattern,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler}
+        )
     </insert>
     <insert id="insertSelective" parameterType="vip.housir.bookspider.entity.Rule">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -82,7 +86,7 @@
                 #{xpath,jdbcType=VARCHAR},
             </if>
             <if test="pattern != null">
-                #{pattern,jdbcType=LONGVARCHAR},
+                #{pattern,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler},
             </if>
         </trim>
     </insert>
@@ -102,7 +106,7 @@
                 xpath = #{xpath,jdbcType=VARCHAR},
             </if>
             <if test="pattern != null">
-                pattern = #{pattern,jdbcType=LONGVARCHAR},
+                pattern = #{pattern,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -113,7 +117,7 @@
       type = #{type,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       xpath = #{xpath,jdbcType=VARCHAR},
-      pattern = #{pattern,jdbcType=LONGVARCHAR}
+      pattern = #{pattern,jdbcType=LONGVARCHAR,typeHandler=vip.housir.bookspider.common.ListTypeHandler}
     where id = #{id,jdbcType=INTEGER}
   </update>
     <update id="updateByPrimaryKey" parameterType="vip.housir.bookspider.entity.Rule">

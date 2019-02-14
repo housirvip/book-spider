@@ -92,6 +92,8 @@
         <table tableName="rule" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="pattern" javaType="java.util.List"
+                            typeHandler="vip.housir.bookspider.common.ListTypeHandler"/>
         </table>
 
     </context>

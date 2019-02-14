@@ -3,10 +3,8 @@ package vip.housir.bookspider.utils;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.selector.Selectable;
 import vip.housir.bookspider.common.Constant;
-import vip.housir.bookspider.entity.KeyValue;
 import vip.housir.bookspider.entity.Rule;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -33,8 +31,7 @@ public class SpiderUtils {
 
         AtomicReference<String> value = new AtomicReference<>(input);
         if (rule.getPattern() != null) {
-            List<KeyValue> list = JsonUtils.convertToList(rule.getPattern(), KeyValue.class);
-            list.forEach(regexp -> value.updateAndGet(v -> v.replaceAll(regexp.getKey(), regexp.getValue())));
+            rule.getPattern().forEach(regexp -> value.updateAndGet(v -> v.replaceAll(regexp.get(Constant.KEY).toString(), regexp.get(Constant.VALUE).toString())));
         }
         return value.get().trim();
     }
