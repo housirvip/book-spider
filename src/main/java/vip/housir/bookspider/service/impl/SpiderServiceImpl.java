@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Spider;
 import vip.housir.bookspider.entity.SpiderTask;
+import vip.housir.bookspider.mq.MqSender;
 import vip.housir.bookspider.service.SpiderService;
 
 /**
@@ -17,6 +18,14 @@ public class SpiderServiceImpl implements SpiderService {
 
     private final Spider chapterSpider;
     private final Spider bookSpider;
+
+    private final MqSender mqSender;
+
+    @Override
+    public void add(SpiderTask spiderTask) {
+
+        mqSender.send(spiderTask);
+    }
 
     @Override
     public void crawl(SpiderTask spiderTask) {

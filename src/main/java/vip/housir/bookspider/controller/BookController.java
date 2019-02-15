@@ -1,13 +1,14 @@
 package vip.housir.bookspider.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import vip.housir.bookspider.entity.SpiderTask;
-import vip.housir.bookspider.entity.TaskType;
-import vip.housir.bookspider.mq.MqSender;
+import org.springframework.web.bind.annotation.*;
+import vip.housir.bookspider.entity.Book;
+import vip.housir.bookspider.entity.Chapter;
+import vip.housir.bookspider.entity.PageDto;
+import vip.housir.bookspider.service.BookService;
+import vip.housir.bookspider.service.ChapterService;
+
+import java.util.List;
 
 /**
  * @author housirvip
@@ -17,18 +18,26 @@ import vip.housir.bookspider.mq.MqSender;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final MqSender mqSender;
+    private final BookService bookService;
+    private final ChapterService chapterService;
 
-    @PostMapping(value = "/add")
-    public SpiderTask add(@RequestParam Integer domainId, @RequestParam String book) {
+    @GetMapping(value = "/{id}")
+    public Book one(@PathVariable Integer id) {
 
-        SpiderTask spiderTask = new SpiderTask();
-        spiderTask.setUrl(book);
-        spiderTask.setDomainId(domainId);
-        spiderTask.setType(TaskType.Book);
+        Book book = bookService.oneById(id);
+        List<Chapter> chapters = chapterService.allByBookId(id);
+        chapters.forEach(chapter -> chapter.setContent(null));
+        book.setChapters(chapters);
+        return book;
+    }
 
-        mqSender.send(spiderTask);
+    @GetMapping(value = "/{id}/content")
+    public Book oneWithContent(@PathVariable Integer id,
+                               @RequestParam Integer pageNum,
+                               @RequestParam Integer pageSize) {
 
-        return spiderTask;
+        Book book = bookService.oneById(id);
+        book.setChapters(chapterService.pageByBookId(id, new PageDto(pageNum, pageSize)));
+        return book;
     }
 }

@@ -26,7 +26,7 @@
         from rule
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectAllByDomainId" resultMap="ResultMapWithBLOBs">
+    <select id="selectAllByDomainId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
         ,

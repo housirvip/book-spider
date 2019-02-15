@@ -8,6 +8,9 @@ public class Constant {
     public static final String KEY = "key";
     public static final String VALUE = "value";
 
+    static final Integer PAGE_NUM_VALUE = 1;
+    static final Integer PAGE_SIZE_VALUE = 5;
+
     public static final String BOOK = "book";
     public static final String CHAPTER = "chapter";
     public static final String TASK = "task";

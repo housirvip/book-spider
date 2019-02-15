@@ -20,4 +20,10 @@ public class BookServiceImpl implements BookService {
 
         bookMapper.insertSelective(book);
     }
+
+    @Override
+    public Book oneById(Integer id) {
+
+        return bookMapper.selectByPrimaryKey(id);
+    }
 }

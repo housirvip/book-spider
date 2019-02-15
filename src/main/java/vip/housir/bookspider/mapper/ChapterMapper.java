@@ -3,6 +3,8 @@ package vip.housir.bookspider.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import vip.housir.bookspider.entity.Chapter;
 
+import java.util.List;
+
 /**
  * @author housirvip
  */
@@ -66,4 +68,12 @@ public interface ChapterMapper {
      * @return int
      */
     int updateByPrimaryKey(Chapter record);
+
+    /**
+     * 根据 bookId，返回所有结果
+     *
+     * @param bookId Integer
+     * @return List
+     */
+    List<Chapter> allByBookId(Integer bookId);
 }

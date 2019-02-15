@@ -3,6 +3,7 @@ package vip.housir.bookspider.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author housirvip
@@ -17,6 +18,8 @@ public class Book implements Serializable {
     private String author;
 
     private String cover;
+
+    private List<Chapter> chapters;
 
     private static final long serialVersionUID = 1L;
 }

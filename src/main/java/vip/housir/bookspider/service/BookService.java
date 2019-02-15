@@ -13,4 +13,12 @@ public interface BookService {
      * @param book Book
      */
     void create(Book book);
+
+    /**
+     * 根据主键查询一条结果
+     *
+     * @param id Integer
+     * @return Book
+     */
+    Book oneById(Integer id);
 }
